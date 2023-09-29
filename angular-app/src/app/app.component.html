@@ -1,0 +1,77 @@
+
+<nav style="background-color: #2471A3; padding: 10px;">
+    <div class="nav-wrapper">
+        <a href="./assets/images/Logo_ucad_2.png" class="brand-logo">
+            <img src="./assets/images/Logo_ucad_2.png" alt="Logo" width="50" height="50">
+        </a>
+        
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <div *ngIf="isAuthenticated()">
+            <li><a href="sass.html">GenKey</a></li>
+            <li><a href="sass.html">Chiffrement</a></li>
+            <li><a href="badges.html">Dechiffrement</a></li>
+            <li><a href="collapsible.html">Signature</a></li>
+            <li><a href="sass.html">Verification</a></li>
+            <li class="logout-link"><a (click)="logout()"><i class="material-icons">logout</i> Se déconnecter</a></li>
+
+          </div>
+
+            <!-- Liens de connexion et de déconnexion -->
+            <li *ngIf="!isAuthenticated()" class="login-link"><a (click)="login()"><i class="material-icons">logout</i> Se connecter</a></li>
+
+
+          </ul> 
+          <div class="center-align" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white;">
+            <p style="font-size: 18px;" *ngIf="!isAuthenticated()">TDSI CIPHER</p>
+        </div>
+    </div>
+    
+</nav>
+
+<router-outlet></router-outlet>
+
+<footer class="page-footer" style="background-color: #2471A3; padding: 10px;">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Transmission des Données et Sécurité de l'Information
+            (TDSI)
+          </h5>
+          <p class="grey-text text-lighten-4">Nous vous offrons tous les services cryptographiques, allez c'est parti!</p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="white-text">Liens Utiles</h5>
+          <ul>
+            <li><a class="grey-text text-lighten-3" href="#!">Linkedin</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Facebook</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      © 2023 Copyright  UCAD
+      <a class="grey-text text-lighten-4 right" href="#!">Plus de liens</a>
+      </div>
+    </div>
+  </footer>
+<!-- ... reste de votre code ...
+
+<div class="container">
+    <div class="row">
+        <div *ngFor="let pokemon of pokemonList" class="col m6 s8">
+            <div class="card horizontal"  pkmnBorderCard  >
+                <div class="card-image">
+                    <img [src]="pokemon.picture"/>
+                </div>
+
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <p>{{pokemon.name}}</p>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+</div>
+ -->

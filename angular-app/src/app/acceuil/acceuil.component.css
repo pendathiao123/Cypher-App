@@ -1,0 +1,46 @@
+/* Ajoutez une marge basse au contenu principal */
+.acceuil-container {
+  margin: 30px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  background-color: #f9f9f9;
+
+}
+  
+.card {
+  max-width: 300px; /* Ajustez la valeur selon vos besoins */
+margin-left: 50px;
+}
+
+/* Tronquer le texte dans les cartes pour éviter le débordement */
+.card-content p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  width: 100vw; /* Ajuste la largeur de la fenêtre */
+  height: 100vh; /* Ajuste la hauteur de la fenêtre */
+}
+
+.center-container img {
+  width: 100%; /* Image occupe toute la largeur */
+  height: auto; /* Ajuste la hauteur en proportion */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
+
+
+
+

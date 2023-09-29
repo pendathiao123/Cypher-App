@@ -1,0 +1,62 @@
+<div class="container" style="background-color: #f2f2f2; padding: 20px; max-height: 600px; overflow: auto;">
+    <h2 style="color: #2196F3; text-align: center;">Signature</h2>
+      <form [formGroup]="signatureForm" style="background-color: #fff; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+    
+        <div class="form-group">
+          <label for="messageFileInput" class="custom-file-button">
+            Choisir le message à signer
+          </label>
+          <input id="messageFileInput" type="file" (change)="onFileSelected($event)" />
+    
+          <mat-form-field>
+            <textarea matInput [readonly]="true">{{ fileContent }}</textarea>
+          </mat-form-field>
+        </div>
+    
+        <!-- Sélection de l'algorithme -->
+        <mat-form-field class="form-group">
+          <mat-label>Algorithme de hashage</mat-label>
+          <mat-select formControlName="algo" [(ngModel)]="algo">
+            <mat-option *ngFor="let algoOption of algoOptions" [value]="algoOption">{{ algoOption }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-group">
+          <mat-label>Algorithme de signature</mat-label>
+          <mat-select formControlName="signAlgo" [(ngModel)]="signAlgo">
+            <mat-option *ngFor="let sign of signAlgos" [value]="sign">{{ sign }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+    
+        <div>
+          <button mat-raised-button color="primary" (click)="hash()">Hasher le fichier</button>
+          <mat-form-field>
+            <textarea matInput [readonly]="true">{{ hashcontent }}</textarea>
+          </mat-form-field>
+        </div>
+
+
+        <div *ngIf="signAlgo === 'RSA'">
+          <div>
+            <button mat-raised-button color="primary" (click)="signRSA()">Signer le fichier avec RSA</button>
+            <mat-form-field>
+              <textarea matInput [readonly]="true">{{ signcontent }}</textarea>
+            </mat-form-field>
+          </div>
+          <div>
+            <button mat-raised-button color="primary" (click)="verifyRSA()">Verifier la signature</button>
+          </div>
+        </div>
+        <div *ngIf="signAlgo === 'DSA'">
+          <div>
+            <button mat-raised-button color="primary" (click)="signDSA()">Signer le fichier avec DSA</button>
+            <mat-form-field>
+              <textarea matInput [readonly]="true">{{ signcontent }}</textarea>
+            </mat-form-field>
+          </div>
+          <div>
+            <button mat-raised-button color="primary" (click)="verifyDSA()">Verifier la signature</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    

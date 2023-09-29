@@ -1,0 +1,92 @@
+/* Ajouter du style pour la classe container */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Style pour les mat-form-field */
+  .mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  /* Style pour le champ de type "file" */
+  .mat-form-field.file-input {
+    position: relative;
+  }
+  
+  .mat-form-field.file-input input[type="file"] {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+  
+  .mat-form-field.file-input .mat-label {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+  }
+  
+  /* Ajouter de l'espace entre les sections */
+  section {
+    margin-bottom: 20px;
+  }
+  
+  /* Ajouter de l'espace entre le bouton et le champ de résultat */
+  button {
+    margin-top: 16px;
+  }
+  
+/* Style pour cacher l'input de type "file" */
+#fileInput {
+    display: none;
+  }
+  
+  /* Style pour le bouton personnalisé */
+  .custom-file-button {
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #2196F3; /* Couleur de fond du bouton */
+    color: #fff; /* Couleur du texte du bouton */
+    border-radius: 4px;
+  }
+  
+  /* Style pour l'étiquette lorsque le fichier est sélectionné */
+  .file-selected + .custom-file-button {
+    background-color: #4CAF50; /* Changez la couleur pour celle de votre choix */
+  }
+  
+  /* Ajoutez ces styles pour ajuster la mise en page des champs */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-form-field,
+.mat-select {
+  width: 100%;
+}
+
+.custom-file-button {
+  margin-bottom: 16px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group input[type="file"] {
+  display: none;
+}

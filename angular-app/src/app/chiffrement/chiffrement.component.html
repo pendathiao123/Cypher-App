@@ -1,0 +1,202 @@
+<div class="container" style="background-color: #f2f2f2; padding: 20px; max-height: 600px; overflow: auto;">
+<h2 style="color: #2196F3; text-align: center;">CHIFFREMENT</h2>
+  <form [formGroup]="chiffrementForm" style="background-color: #fff; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+
+    <mat-form-field>
+      <mat-label>Chiffrement</mat-label>
+      <mat-select formControlName="chiffrementType" [(ngModel)]="chiffrementType">
+        <mat-option value="symetrique">Symetrique</mat-option>
+        <mat-option value="asymetrique">Asymetrique</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Action</mat-label>
+      <mat-select formControlName="actionType" [(ngModel)]="actionType">
+        <mat-option value="chiffrer">Chiffrer</mat-option>
+        <mat-option value="dechiffrer">Déchiffrer</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div *ngIf="chiffrementType === 'symetrique'">
+    <!-- Champ pour choisir la clé -->
+    <div *ngIf="actionType === 'chiffrer'">
+    <div class="form-group">
+      <label for="keyFileInput" class="custom-file-button">
+        Choisir la clé
+      </label>
+      <input id="keyFileInput" type="file" (change)="onFilesSelected($event)"/>
+
+      <mat-form-field>
+        <mat-label>Clé</mat-label>
+        <textarea matInput [readonly]="true">{{ keyContent }}</textarea>
+      </mat-form-field>
+    </div>
+
+    <!-- Sélection du message à chiffrer -->
+    <div class="form-group">
+      <label for="messageFileInput" class="custom-file-button">
+        Choisir le message
+      </label>
+      <input id="messageFileInput" type="file" (change)="onFileSelected($event)" />
+
+      <mat-form-field>
+        <textarea matInput [readonly]="true">{{ fileContent }}</textarea>
+      </mat-form-field>
+    </div>
+
+    <!-- Sélection de l'algorithme -->
+    <mat-form-field class="form-group">
+      <mat-label>Algorithme</mat-label>
+      <mat-select formControlName="algo" [(ngModel)]="algo">
+        <mat-option *ngFor="let algoOption of algoOptions" [value]="algoOption">{{ algoOption }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-group">
+      <mat-label>Provider</mat-label>
+      <mat-select formControlName="provider" [(ngModel)]="provider">
+        <mat-option *ngFor="let provider of providers" [value]="provider">{{ provider}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div>
+      <button mat-raised-button color="primary" (click)="cipher()">Chiffrer le fichier</button>
+    </div>
+    
+    <!-- Champ pour afficher le résultat du chiffrement -->
+    <mat-form-field class="form-group">
+      <mat-label>Chiffré</mat-label>
+      <textarea matInput [readonly]="true">{{ chiffreContent}}</textarea>
+    </mat-form-field>
+  </div>
+  <div *ngIf="actionType === 'dechiffrer'">
+    <div class="form-group">
+      <label for="keyFileInput" class="custom-file-button">
+        Choisir la clé
+      </label>
+      <input id="keyFileInput" type="file" (change)="onFilesSelected($event)"/>
+
+      <mat-form-field>
+        <mat-label>Clé</mat-label>
+        <textarea matInput [readonly]="true">{{ keyContent }}</textarea>
+      </mat-form-field>
+    </div>
+    <mat-form-field class="form-group">
+      <mat-label>Algorithme</mat-label>
+      <mat-select formControlName="algo" [(ngModel)]="algo">
+        <mat-option *ngFor="let algoOption of algoOptions" [value]="algoOption">{{ algoOption }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-group">
+      <mat-label>Provider</mat-label>
+      <mat-select formControlName="provider" [(ngModel)]="provider">
+        <mat-option *ngFor="let provider of providers" [value]="provider">{{ provider}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="form-group">
+      <label for="chiffreFileInput" class="custom-file-button">
+        Choisir un chiffré
+      </label>
+      <input id="chiffreFileInput" type="file" (change)="onChiffreSelected($event)" />
+
+      <div>
+        <button mat-raised-button color="primary" (click)="decrypt()">Déchiffrer le message</button>
+      </div>
+
+      <mat-form-field>
+        <textarea matInput [readonly]="true">{{ dechiff }}</textarea>
+      </mat-form-field>
+    </div>
+  </div>
+  </div>
+  <div *ngIf="chiffrementType === 'asymetrique'">
+    <div *ngIf="actionType === 'chiffrer'">
+    <div class="form-group">
+      <label for="keyFileInput" class="custom-file-button">
+        Choisir la clé de chiffrement
+      </label>
+      <input id="keyFileInput" type="file" (change)="onFilesSelected($event)"/>
+
+      <mat-form-field>
+        <mat-label>Clé de chiffrement</mat-label>
+        <textarea matInput [readonly]="true">{{ keyContent }}</textarea>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <label for="messageFileInput" class="custom-file-button">
+        Choisir le message
+      </label>
+      <input id="messageFileInput" type="file" (change)="onFileSelected($event)" />
+
+      <mat-form-field>
+        <textarea matInput [readonly]="true">{{ fileContent }}</textarea>
+      </mat-form-field>
+    </div>
+    <mat-form-field class="form-group">
+      <mat-label>Algorithme</mat-label>
+      <mat-select formControlName="algo" [(ngModel)]="algo">
+        <mat-option *ngFor="let algoasym of algoAsymetrique" [value]="algoasym">{{ algoasym}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-group">
+      <mat-label>Provider</mat-label>
+      <mat-select formControlName="provider" [(ngModel)]="provider">
+        <mat-option *ngFor="let provider of providers" [value]="provider">{{ provider}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div>
+      <button mat-raised-button color="primary" (click)="cipherAsym()">Chiffrer le fichier</button>
+    </div>
+    
+    <!-- Champ pour afficher le résultat du chiffrement -->
+    <mat-form-field class="form-group">
+      <mat-label>Chiffré</mat-label>
+      <textarea matInput [readonly]="true">{{ chiffreContent}}</textarea>
+    </mat-form-field>
+  </div>
+  <div *ngIf="actionType === 'dechiffrer'">
+    <div class="form-group">
+      <label for="privFileInput" class="custom-file-button">
+        Choisir la clé de déchiffrement
+      </label>
+      <input id="privFileInput" type="file" (change)="onFilesPrivSelected($event)"/>
+
+      <mat-form-field>
+        <mat-label>Clé dechiffrement</mat-label>
+        <textarea matInput [readonly]="true">{{ privContent }}</textarea>
+      </mat-form-field>
+    </div>
+    <mat-form-field class="form-group">
+      <mat-label>Algorithme</mat-label>
+      <mat-select formControlName="algo" [(ngModel)]="algo">
+        <mat-option *ngFor="let algoasym of algoAsymetrique" [value]="algoasym">{{ algoasym}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-group">
+      <mat-label>Provider</mat-label>
+      <mat-select formControlName="provider" [(ngModel)]="provider">
+        <mat-option *ngFor="let provider of providers" [value]="provider">{{ provider}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="form-group">
+      <label for="chiffreFileInput" class="custom-file-button">
+        Choisir un chiffré
+      </label>
+      <input id="chiffreFileInput" type="file" (change)="onChiffreSelected($event)" />
+
+      <div>
+        <button mat-raised-button color="primary" (click)="decryptAsym()">Déchiffrer le message</button>
+      </div>
+
+      <mat-form-field>
+        <textarea matInput [readonly]="true">{{ dechiff }}</textarea>
+      </mat-form-field>
+    </div>
+  </div>
+  </div>
+  </form>
+</div>

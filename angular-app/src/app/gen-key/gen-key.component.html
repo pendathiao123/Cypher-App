@@ -1,0 +1,54 @@
+<div class="container" style="background-color: #f2f2f2; padding: 20px;">
+  <h2 style="color: #2196F3; text-align: center;">GenKey</h2>
+  <form [formGroup]="genkey" style="background-color: #fff; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+
+    <mat-form-field>
+      <mat-label>Chiffrement</mat-label>
+      <mat-select formControlName="chiffrementType" [(ngModel)]="chiffrementType">
+        <mat-option value="symetrique">Symetrique</mat-option>
+        <mat-option value="asymetrique">Asymetrique</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="chiffrementType === 'symetrique'">
+
+      <mat-form-field>
+        <mat-label>Algorithme</mat-label>
+        <mat-select formControlName="algorithmeSym" [(ngModel)]="algo">
+          <mat-option *ngFor="let a of algorithmeSym" [value]="a">{{ a }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <mat-label>Taille</mat-label>
+        <mat-select formControlName="tailles" [(ngModel)]="taille">
+          <mat-option *ngFor="let t of tailles" [value]="t">{{ t }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="chiffrementType === 'asymetrique'">
+      <mat-form-field>
+        <mat-label>Algorithme</mat-label>
+        <mat-select formControlName="algorithmeAsym" [(ngModel)]="algo">
+          <mat-option *ngFor="let a of algorithmeAsym" [value]="a">{{ a }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Taille</mat-label>
+        <mat-select formControlName="tailles" [(ngModel)]="taille">
+          <mat-option *ngFor="let t of tailles" [value]="t">{{ t }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+
+    <div class="button-container">
+      <button mat-raised-button style="background-color: #2196F3; color: white; font-weight: bold; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;"
+      (click)="openDialog()">Générer la clé</button>
+    </div>
+
+  </form>
+</div>
