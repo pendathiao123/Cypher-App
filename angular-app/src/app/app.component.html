@@ -6,23 +6,15 @@
         </a>
         
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <div *ngIf="isAuthenticated()">
-            <li><a href="sass.html">GenKey</a></li>
-            <li><a href="sass.html">Chiffrement</a></li>
-            <li><a href="badges.html">Dechiffrement</a></li>
-            <li><a href="collapsible.html">Signature</a></li>
-            <li><a href="sass.html">Verification</a></li>
-            <li class="logout-link"><a (click)="logout()"><i class="material-icons">logout</i> Se déconnecter</a></li>
-
-          </div>
-
             <!-- Liens de connexion et de déconnexion -->
-            <li *ngIf="!isAuthenticated()" class="login-link"><a (click)="login()"><i class="material-icons">logout</i> Se connecter</a></li>
+            
 
+            <li *ngIf="!isAuthenticated()" ><a [routerLink]="['/login']">Se connecter</a></li>
+            <li *ngIf="isAuthenticated()" ><a [routerLink]="['/login']">Se déconnecter</a></li>
 
           </ul> 
           <div class="center-align" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white;">
-            <p style="font-size: 18px;" *ngIf="!isAuthenticated()">TDSI CIPHER</p>
+            <p style="font-size: 18px;">TDSI CIPHER</p>
         </div>
     </div>
     

@@ -74,12 +74,12 @@ export class GenKeyComponent {
         this.path = result;
           // Si le type de génération est "Générer", on peut procéder à la génération ici
           this.genKeyService
-            .genSecretKey(this.algo, this.taille, 'C:/Keys/' + this.path+'.txt', new FormData())
+            .genSecretKey(this.algo, this.taille, 'C:/Penda-Thiao_ExamenCryptoJava/keys/' + this.path+'.txt', new FormData())
             .subscribe(
               (result: any) => {
                 this.generatedKey = result;
                 this.openKeyContentDialog(this.generatedKey);
-                this.showSnackBar('La clé a été enregistrée avec succès dans: '+'C:/Keys/'+this.path);
+                this.showSnackBar('La clé a été enregistrée avec succès dans: '+'C:/Penda-Thiao_ExamenCryptoJava/keys/'+this.path);
               },
               (error: any) => {
                 console.error(error);
@@ -115,8 +115,8 @@ export class GenKeyComponent {
               (result: any) => {
                 this.generatedKey = result;
                 this.openKeyContentDialog(this.generatedKey); 
-                this.showSnackBar('Votre paire de clés a été enregistrée avec succès dans: '+'C:/Keys/'+this.path+'Priv.txt'+'\n' +
-              'Et' + 'C:/Keys/'+this.path+'Pub.txt');
+                this.showSnackBar('Votre paire de clés a été enregistrée avec succès dans: '+'C:/Penda-Thiao_ExamenCryptoJava/keys/'+this.path+'Priv.txt'+'\n' +
+              'Et' + 'C:/Penda-Thiao_ExamenCryptoJava/keys/'+this.path+'Pub.txt');
 
               },
               (error: any) => {

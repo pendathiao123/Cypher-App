@@ -56,8 +56,8 @@ public class GenKeyService {
         KeyPair kp = kpg.generateKeyPair();
         System.out.println("Clé pub:" + Utils.toHex(kp.getPublic().getEncoded()));
         System.out.println("Clé priv:" + Utils.toHex(kp.getPrivate().getEncoded()));
-        save(kp.getPublic(), "C:\\Keys\\" + path + "pub.txt");
-        save(kp.getPrivate(), "C:\\Keys\\" + path + "priv.txt");
+        save(kp.getPublic(), "C:\\Penda-Thiao_ExamenCryptoJava\\keys\\" + path + "pub.txt");
+        save(kp.getPrivate(), "C:\\Penda-Thiao_ExamenCryptoJava\\keys\\" + path + "priv.txt");
         return  kp;
     }
 

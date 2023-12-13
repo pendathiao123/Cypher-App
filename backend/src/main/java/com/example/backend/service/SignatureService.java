@@ -46,53 +46,68 @@ public class SignatureService {
 
     public void signRSA(String keyPath, String hashPath, String signPath) throws Exception {
         PrivateKey priv = genKeyService.getPrivateKey("RSA", keyPath);
-        byte[] fileContent = Files.readAllBytes(Paths.get(hashPath));
+        String fileContent = new String(Files.readAllBytes(Paths.get(hashPath)));
 
+        byte[] hach = hexStringToBytes(fileContent);
+
+
+        System.out.println("haché du signé" + hach);
         Signature sig = Signature.getInstance("SHA256WithRSA");
         sig.initSign(priv);
 
-        sig.update(fileContent);
+        sig.update(hach);
         byte[] signatureBytes = sig.sign();
 
+        String signatureHex = bytesToHexString(signatureBytes);
+
+
         try (FileOutputStream signatureOutputStream = new FileOutputStream(signPath)) {
-            signatureOutputStream.write(signatureBytes);
+            signatureOutputStream.write(signatureHex.getBytes());
         }
     }
 
     public boolean verifyRSA(String publiqueKeyPath, String filePath, String signPath, String hashAlgo) throws Exception {
-        PublicKey pub = genKeyService.getPubliqueKey("RSA",publiqueKeyPath);
-        byte[] fileContent = Files.readAllBytes(Paths.get(filePath));
-        byte[] signContent = Files.readAllBytes(Paths.get(signPath));
+        try {
+            PublicKey pub = genKeyService.getPubliqueKey("RSA", publiqueKeyPath);
+            byte[] fileContent = Files.readAllBytes(Paths.get(filePath));
+            String signatureHex = new String(Files.readAllBytes(Paths.get(signPath)));
 
-        Signature sig = Signature.getInstance("SHA256WithRSA");
+            // Convertir la signature hexadécimale en bytes
+            byte[] signContent = hexStringToBytes(signatureHex);
+            Signature sig = Signature.getInstance("SHA256WithRSA");
 
-        MessageDigest md = MessageDigest.getInstance(hashAlgo);
+            MessageDigest md = MessageDigest.getInstance(hashAlgo);
 
-        sig.initVerify(pub);
-        md.update(fileContent);
-        byte[] empreinte2 = md.digest();
-        sig.update(empreinte2);
+            sig.initVerify(pub);
+            md.update(fileContent);
+            byte[] empreinte2 = md.digest();
 
-        String empreinteHex = bytesToHexString(empreinte2);
-        String signContentHex = bytesToHexString(signContent);
+            System.out.println("Contenu haché (empreinte2): " + bytesToHexString(empreinte2));
+            System.out.println("Contenu de la signature (signContent): " + bytesToHexString(signContent));
 
-        System.out.println("content:" + empreinteHex);
-        System.out.println("signcontent:" + signContentHex);
+            sig.update(empreinte2);
 
-        boolean verifier = sig.verify(signContent);
-        System.out.println("Verification =" + verifier);
+            boolean verifier = sig.verify(signContent);
+            System.out.println("Vérification de la signature RSA: " + verifier);
 
-        return verifier;
+            return verifier;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
+
 
     public void signDSA(String keyPath, String filePath, String signPath) throws Exception {
         PrivateKey priv = genKeyService.getPrivateKey("DSA", keyPath);
-        byte[] fileContent = Files.readAllBytes(Paths.get(filePath));
+        String fileContent = new String(Files.readAllBytes(Paths.get(filePath)));
 
-        Signature sig = Signature.getInstance("SHA256WithDSA");
+        byte[] hach = hexStringToBytes(fileContent);
+
+        Signature sig = Signature.getInstance("DSA");
         sig.initSign(priv);
 
-        sig.update(fileContent);
+        sig.update(hach);
         byte[] signatureBytes = sig.sign();
 
         // Convertir les bytes de la signature en une représentation hexadécimale
@@ -111,7 +126,7 @@ public class SignatureService {
         // Convertir la signature hexadécimale en bytes
         byte[] signContent = hexStringToBytes(signatureHex);
 
-        Signature sig = Signature.getInstance("SHA256WithDSA");
+        Signature sig = Signature.getInstance("DSA");
         sig.initVerify(pub);
 
         MessageDigest md = MessageDigest.getInstance(hashAlgo);

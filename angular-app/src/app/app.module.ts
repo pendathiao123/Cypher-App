@@ -22,6 +22,7 @@ import { KeyContentDialogComponent } from './key-content-dialog/key-content-dial
 import { ChiffrementService } from './chiffrement/chiffrement.service';
 import { SignatureModule } from './signature/signature.module';
 import { SignatureService } from './signature/signature.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { SignatureService } from './signature/signature.service';
     FormsModule,
     ChiffrementModule,
     SignatureModule,
+    MatIconModule
     
   ],
   providers: [

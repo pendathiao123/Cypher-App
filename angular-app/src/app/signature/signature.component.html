@@ -36,25 +36,77 @@
 
 
         <div *ngIf="signAlgo === 'RSA'">
+          <div class="form-group">
+            <label for="cleSFileInput" class="custom-file-button">
+              Choisir la clé de signature
+            </label>
+            <input id="cleSFileInput" type="file" (change)="onSigneSelected($event)" />
+      
+            <mat-form-field>
+              <textarea matInput [readonly]="true">{{ cleSigneContent }}</textarea>
+            </mat-form-field>
+          </div>
           <div>
             <button mat-raised-button color="primary" (click)="signRSA()">Signer le fichier avec RSA</button>
             <mat-form-field>
               <textarea matInput [readonly]="true">{{ signcontent }}</textarea>
             </mat-form-field>
           </div>
+          <div class="form-group">
+            <label for="cleVFileInput" class="custom-file-button">
+              Choisir la clé de vérification
+            </label>
+            <input id="cleVFileInput" type="file" (change)="onVerifySelected($event)" />
+      
+            <mat-form-field>
+              <textarea matInput [readonly]="true">{{ cleVerifyContent }}</textarea>
+            </mat-form-field>
+          </div>
           <div>
             <button mat-raised-button color="primary" (click)="verifyRSA()">Verifier la signature</button>
+            <div *ngIf="isSignatureValid" class="text-success">
+              <span style="color: green; font-size: 24px;">&#10004;</span> Signature valide
+            </div>
+            <div *ngIf="!isSignatureValid" class="text-danger">
+              <span style="color: red; font-size: 24px;">&#10008;</span> Signature invalide
+            </div>
           </div>
         </div>
         <div *ngIf="signAlgo === 'DSA'">
+          <div class="form-group">
+            <label for="cleSFileInput" class="custom-file-button">
+              Choisir la clé de signature
+            </label>
+            <input id="cleSFileInput" type="file" (change)="onSigneSelected($event)" />
+      
+            <mat-form-field>
+              <textarea matInput [readonly]="true">{{ cleSigneContent }}</textarea>
+            </mat-form-field>
+          </div>
           <div>
             <button mat-raised-button color="primary" (click)="signDSA()">Signer le fichier avec DSA</button>
             <mat-form-field>
               <textarea matInput [readonly]="true">{{ signcontent }}</textarea>
             </mat-form-field>
           </div>
+          <div class="form-group">
+            <label for="cleVFileInput" class="custom-file-button">
+              Choisir la clé de Vérification
+            </label>
+            <input id="cleVFileInput" type="file" (change)="onVerifySelected($event)" />
+      
+            <mat-form-field>
+              <textarea matInput [readonly]="true">{{ cleVerifyContent }}</textarea>
+            </mat-form-field>
+          </div>
           <div>
             <button mat-raised-button color="primary" (click)="verifyDSA()">Verifier la signature</button>
+            <div *ngIf="isSignatureValid" class="text-success">
+              <span style="color: green; font-size: 24px;">&#10004;</span> Signature valide
+            </div>
+            <div *ngIf="!isSignatureValid" class="text-danger">
+              <span style="color: red; font-size: 24px;">&#10008;</span> Signature invalide
+            </div>
           </div>
         </div>
       </form>

@@ -168,7 +168,7 @@ onTypeChange(): void {
 cipher() {
   const formData = new FormData();
 
-  this.chiffrementService.cipher('C:/TPCryptoJava/'+this.clairPath, 'C:/TPCryptoJava/'+this.chiffrePath, 'C:/TPCryptoJava/'+this.keyPath, this.algo, this.provider, formData).subscribe(
+  this.chiffrementService.cipher('C:/Penda-Thiao_ExamenCryptoJava/'+this.clairPath, 'C:/Penda-Thiao_ExamenCryptoJava/chiffre.txt', 'C:/Penda-Thiao_ExamenCryptoJava/keys/'+this.keyPath, this.algo, this.provider, formData).subscribe(
     response => {
       // Gérer la réponse de la requête ici
       console.log("message bien chiffre");
@@ -184,7 +184,7 @@ cipher() {
 cipherAsym() {
   const formData = new FormData();
 
-  this.chiffrementService.cipherAsym('C:/TPCryptoJava/'+this.clairPath, 'C:/TPCryptoJava/'+this.chiffrePath, 'C:/TPCryptoJava/'+this.keyPath, this.algo, this.provider, formData).subscribe(
+  this.chiffrementService.cipherAsym('C:/Penda-Thiao_ExamenCryptoJava/'+this.clairPath, 'C:/Penda-Thiao_ExamenCryptoJava/chiffre.txt', 'C:/Penda-Thiao_ExamenCryptoJava/keys/'+this.keyPath, this.algo, this.provider, formData).subscribe(
     response => {
       // Gérer la réponse de la requête ici
       console.log("message bien chiffre");
@@ -200,7 +200,7 @@ cipherAsym() {
 decrypt() {
   const formData = new FormData();
 
-  this.chiffrementService.decrypt('C:/TPCryptoJava/'+this.chiffrePath, 'C:/TPCryptoJava/dechiffre.txt', 'C:/TPCryptoJava/'+this.keyPath, this.algo, this.provider, formData).subscribe(
+  this.chiffrementService.decrypt('C:/Penda-Thiao_ExamenCryptoJava/'+this.chiffrePath, 'C:/Penda-Thiao_ExamenCryptoJava/dechiffre.txt', 'C:/Penda-Thiao_ExamenCryptoJava/keys/'+this.keyPath, this.algo, this.provider, formData).subscribe(
     response => {
       // Gérer la réponse de la requête ici
       console.log("message bien dechiffre");
@@ -217,7 +217,7 @@ decrypt() {
 decryptAsym() {
   const formData = new FormData();
 
-  this.chiffrementService.decryptAsym('C:/TPCryptoJava/'+this.chiffrePath, 'C:/TPCryptoJava/dechiffre.txt', 'C:/TPCryptoJava/'+this.keyPath, this.algo, this.provider, formData).subscribe(
+  this.chiffrementService.decryptAsym('C:/Penda-Thiao_ExamenCryptoJava/'+this.chiffrePath, 'C:/Penda-Thiao_ExamenCryptoJava/dechiffre.txt', 'C:/Penda-Thiao_ExamenCryptoJava/keys/'+this.keyPath, this.algo, this.provider, formData).subscribe(
     response => {
       // Gérer la réponse de la requête ici
       console.log("message bien dechiffre");
@@ -233,7 +233,7 @@ decryptAsym() {
 
 getAppelChiffreContent() {
   // Appelez la méthode getChiffreContent du service ChiffrementService
-  this.chiffrementService.getCipherContent('C:/TPCryptoJava/chiffre.txt').subscribe(
+  this.chiffrementService.getCipherContent('C:/Penda-Thiao_ExamenCryptoJava/chiffre.txt').subscribe(
     response => {
       // Gérer la réponse de l'API ici
       console.log('Contenu chiffré :', response);
@@ -250,7 +250,7 @@ getAppelChiffreContent() {
 
 getdechiffreContent() {
   // Appelez la méthode getChiffreContent du service ChiffrementService
-  this.chiffrementService.getCipherContent('C:/TPCryptoJava/dechiffre.txt').subscribe(
+  this.chiffrementService.getCipherContent('C:/Penda-Thiao_ExamenCryptoJava/dechiffre.txt').subscribe(
     (response) => {
       // Gérer la réponse de l'API ici
       console.log('Contenu chiffré :', response);

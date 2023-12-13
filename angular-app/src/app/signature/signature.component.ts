@@ -3,7 +3,6 @@ import { SignatureService } from './signature.service';
 import { FormGroup } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
 
-
 @Component({
   selector: 'app-signature',
   templateUrl: './signature.component.html',
@@ -21,6 +20,11 @@ export class SignatureComponent {
   signFilePath: string;
   hashcontent: string
   signcontent: string
+  cleSignature: string
+  cleSigneContent: string
+  cleVerification: string
+  cleVerifyContent: string
+  isSignatureValid: boolean = false;
 
   constructor(private signatureService: SignatureService, private formBuilder: FormBuilder){
 
@@ -30,6 +34,7 @@ export class SignatureComponent {
       algo : ['', Validators.required],
       signAlgos: ['', Validators.required],
       signAlgo: ['', Validators.required],
+      isSignatureValid: ['', Validators.required],
     });
   }
 
@@ -46,9 +51,33 @@ export class SignatureComponent {
     reader.readAsText(file); 
   }
 
+  onSigneSelected(event: any) {
+    const file: File = event.target.files[0];
+    this.cleSignature = file.name; 
+
+    const reader = new FileReader();
+    reader.onload = (event: any) => {
+      this.cleSigneContent = event.target.result; 
+      console.log('Contenu du fichier : ', this.cleSigneContent);
+    };
+    reader.readAsText(file); 
+  }
+
+  onVerifySelected(event: any) {
+    const file: File = event.target.files[0];
+    this.cleVerification = file.name; 
+
+    const reader = new FileReader();
+    reader.onload = (event: any) => {
+      this.cleVerifyContent = event.target.result; 
+      console.log('Contenu du fichier : ', this.cleVerifyContent);
+    };
+    reader.readAsText(file); 
+  }
+
   hash(){
     const formData = new FormData();
-    this.signatureService.hash(this.algo,'C:/TPCryptoJava/' + this.filePath,'C:/TPCryptoJava/hash.txt', formData).subscribe(
+    this.signatureService.hash(this.algo,'C:/Penda-Thiao_ExamenCryptoJava/' + this.filePath,'C:/Penda-Thiao_ExamenCryptoJava/hash.txt', formData).subscribe(
       response => {
         console.log("message bien hashé");
         this.gethashContent()
@@ -61,7 +90,7 @@ export class SignatureComponent {
 
   gethashContent() {
     // Appelez la méthode getChiffreContent du service ChiffrementService
-    this.signatureService.getContent('C:/TPCryptoJava/hash.txt').subscribe(
+    this.signatureService.getContent('C:/Penda-Thiao_ExamenCryptoJava/hash.txt').subscribe(
       (response) => {
         // Gérer la réponse de l'API ici
         console.log('Contenu du hashé :', response);
@@ -79,14 +108,14 @@ export class SignatureComponent {
 
   getsignContent() {
     // Appelez la méthode getChiffreContent du service ChiffrementService
-    this.signatureService.getContent('C:/TPCryptoJava/sign.txt').subscribe(
+    this.signatureService.getContent('C:/Penda-Thiao_ExamenCryptoJava/sign.txt').subscribe(
       (response) => {
         // Gérer la réponse de l'API ici
         console.log('Contenu du signé :', response);
   
         // Mettez à jour une variable ou un champ de votre composant pour afficher le contenu chiffré dans l'interface utilisateur
         this.signcontent = response;
-        console.log(this.hashcontent);
+        console.log(this.signcontent);
       },
       (error) => {
         // Gérer les erreurs ici
@@ -97,7 +126,7 @@ export class SignatureComponent {
 
   signRSA(){
     const formData = new FormData();
-    this.signatureService.signRSA('C:/TPCryptoJava/keyrsapriv.txt','C:/TPCryptoJava/hash.txt','C:/TPCryptoJava/sign.txt', formData).subscribe(
+    this.signatureService.signRSA('C:/Penda-Thiao_ExamenCryptoJava/keys/' + this.cleSignature,'C:/Penda-Thiao_ExamenCryptoJava/hash.txt','C:/Penda-Thiao_ExamenCryptoJava/sign.txt', formData).subscribe(
       response => {
         console.log("message bien chiffre");
         this.getsignContent()
@@ -110,7 +139,7 @@ export class SignatureComponent {
   
   signDSA(){
     const formData = new FormData();
-    this.signatureService.signDSA('C:/TPCryptoJava/keydsapriv.txt','C:/TPCryptoJava/hash.txt','C:/TPCryptoJava/sign.txt', formData).subscribe(
+    this.signatureService.signDSA('C:/Penda-Thiao_ExamenCryptoJava/keys/' + this.cleSignature,'C:/Penda-Thiao_ExamenCryptoJava/hash.txt','C:/Penda-Thiao_ExamenCryptoJava/sign.txt', formData).subscribe(
       response => {
         console.log("message bien signé");
         this.getsignContent()
@@ -123,24 +152,30 @@ export class SignatureComponent {
 
   verifyDSA(){
     const formData = new FormData();
-    this.signatureService.verifyDSA('C:/TPCryptoJava/keydsapub.txt','C:/TPCryptoJava/message.txt','C:/TPCryptoJava/sign.txt',this.algo, formData).subscribe(
+    this.signatureService.verifyDSA('C:/Penda-Thiao_ExamenCryptoJava/keys/' + this.cleVerification,'C:/Penda-Thiao_ExamenCryptoJava/message.txt','C:/Penda-Thiao_ExamenCryptoJava/sign.txt',this.algo, formData).subscribe(
       response => {
         console.log("Signature vérifiée avec succés");
+        this.isSignatureValid = true; // La signature est valide
+
       },
       error => {
         console.error(error);
+        this.isSignatureValid = false; // La signature est invalide
+
       }
     );
   }
 
   verifyRSA(){
     const formData = new FormData();
-    this.signatureService.verifyRSA('C:/TPCryptoJava/keyrsapub.txt','C:/TPCryptoJava/message.txt','C:/TPCryptoJava/sign.txt', this.algo, formData).subscribe(
+    this.signatureService.verifyRSA('C:/Penda-Thiao_ExamenCryptoJava/keys/' + this.cleVerification,'C:/Penda-Thiao_ExamenCryptoJava/message.txt','C:/Penda-Thiao_ExamenCryptoJava/sign.txt', this.algo, formData).subscribe(
       response => {
         console.log("Signature vérifiée avec succés");
+        this.isSignatureValid = true;
       },
       error => {
         console.error(error);
+        this.isSignatureValid = false;
       }
     );
   }
